@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="cordova-background-sms"
+	version="1.0.0">
+      
+    <name>SMS</name>
+	<description>Cordova plugin read incoming SMS</description>
+	<author>Vikram Menon</author>
+	<license>MIT</license>
+	<keywords>vikram,sms</keywords>
+
+	<engines>
+	    <engine name="cordova" version=">=3.0.0" />
+	</engines>
+
+    <js-module src="www/SMS.js" name="SMS">
+        <clobbers target="window.SMS" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SMS">
+                <param name="android-package" value="com.vikram.cordova.sms.SMSPlugin"/>
+            </feature>
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/*">
+		    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+		    <uses-permission android:name="android.permission.READ_SMS" />
+		    <uses-permission android:name="android.permission.WRITE_SMS" />
+		    <uses-permission android:name="android.permission.SEND_SMS" />
+          </config-file>
+		  
+		  
+		  <config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<receiver android:name="com.vikram.cordova.sms.broadcastreceiver">   
+				<intent-filter>
+					<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+				</intent-filter>
+			</receiver>
+		</config-file>
+          
+		<source-file src="src/android/SMSPlugin.java" target-dir="src/com/vikram/cordova/sms"/>
+    </platform>
+
+</plugin>
