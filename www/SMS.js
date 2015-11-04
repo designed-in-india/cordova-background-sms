@@ -4,6 +4,7 @@
  
  
   SmsPlugin.prototype.doSomething = function(successCallback,failureCallback) {
+    console.log('inside cordova')
     return exec(successCallback, failureCallback, 'IncomingSms', 'StopReception', []);
   }
   
